@@ -4,14 +4,15 @@ namespace Task9
 {
     public partial class Form1 : Form
     {
-        Brush[,] _colorOfTheSquare = new Brush[4, 4];
+        Color[,] _squareColors = new Color[4, 4];
         Random _random = new Random();
         private Timer _timer;
-        Brush _randomColor;
-        List<Point> _selectedSquares = new List<Point>;
+        List<Color> _selectedColors = new List<Color>();
+
         public Form1()
         {
             InitializeComponent();
+            PlayButton.Enabled = false;
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
@@ -20,12 +21,13 @@ namespace Task9
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    _randomColor = new SolidBrush(Color.FromArgb(_random.Next(255), _random.Next(255), _random.Next(255), _random.Next(255)));
-                    _colorOfTheSquare[i, j] = _randomColor;
+                    Color randomColor = Color.FromArgb(_random.Next(255), _random.Next(255), _random.Next(255), _random.Next(255));
+                    _squareColors[i, j] = randomColor;
                 }
             }
             Draw();
         }
+
         private void Draw()
         {
             Graphics g = Panel.CreateGraphics();
@@ -39,9 +41,21 @@ namespace Task9
                 for (int j = 0; j < 4; j++)
                 {
                     y = height / 4 * j;
-                    g.FillRectangle(_colorOfTheSquare[i, j], x, y, width / 4, height / 4);
+                    g.FillRectangle(new SolidBrush(_squareColors[i, j]), x, y, width / 4, height / 4);
                 }
-                y = 0;
+            }
+        }
+        
+        private void Panel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                PlayButton.Enabled = true;
+                var rowIndex = e.Location.X / (Panel.ClientSize.Width / 4);
+                var columnIndex = e.Location.Y / (Panel.ClientSize.Height / 4);
+                var selectedColor = _squareColors[rowIndex, columnIndex];
+                _selectedColors.Add(selectedColor);
+                ColorListBox.Items.Add(selectedColor);
             }
         }
     }

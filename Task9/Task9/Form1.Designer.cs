@@ -36,10 +36,12 @@
             // 
             // Panel
             // 
+            this.Panel.BackColor = System.Drawing.Color.White;
             this.Panel.Location = new System.Drawing.Point(1, 0);
             this.Panel.Name = "Panel";
             this.Panel.Size = new System.Drawing.Size(400, 400);
             this.Panel.TabIndex = 0;
+            this.Panel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_MouseDown);
             // 
             // ResetButton
             // 
