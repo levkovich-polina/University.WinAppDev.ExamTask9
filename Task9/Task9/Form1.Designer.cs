@@ -61,6 +61,7 @@
             this.PlayButton.TabIndex = 2;
             this.PlayButton.Text = "Воспроизвести";
             this.PlayButton.UseVisualStyleBackColor = true;
+            this.PlayButton.Click += new System.EventHandler(this.PlayButton_Click);
             // 
             // ColorListBox
             // 
